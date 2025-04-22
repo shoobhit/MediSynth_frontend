@@ -88,14 +88,64 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .page-transition {
+    @apply animate-fade-in;
+  }
+
+  .form-container {
+    @apply animate-scale-in bg-white/80 backdrop-blur-sm dark:bg-gray-900/80 rounded-xl shadow-xl border border-accent/20;
+  }
+
+  .form-input {
+    @apply transition-all duration-200 focus:ring-2 focus:ring-primary/50;
+  }
+
+  .form-button {
+    @apply relative overflow-hidden transition-all duration-300 
+           bg-gradient-to-r from-primary to-primary/80 
+           hover:from-primary/90 hover:to-primary/70
+           text-white font-medium rounded-lg
+           transform hover:scale-[1.02] active:scale-[0.98]
+           before:absolute before:inset-0 
+           before:bg-gradient-to-r before:from-white/20 before:to-transparent 
+           before:translate-x-[-100%] hover:before:translate-x-[100%] 
+           before:transition-transform before:duration-500;
+  }
+
+  .logo-pulse {
+    @apply animate-pulse;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
