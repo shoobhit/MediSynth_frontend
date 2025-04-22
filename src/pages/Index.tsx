@@ -2,10 +2,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Stethoscope, TestTubes, Microscope } from 'lucide-react';
 
 const Index = () => {
   useEffect(() => {
-    // Animation functions
+    // Animation functions for medical diagram background
     const createAnimatedBackground = () => {
       const container = document.querySelector('.animated-background');
       if (!container) return;
@@ -15,25 +16,42 @@ const Index = () => {
         container.removeChild(container.firstChild);
       }
       
-      // Create medical-themed floating elements
-      for (let i = 0; i < 15; i++) {
+      // Add the main rotating medical diagram
+      const medicalDiagram = document.createElement('div');
+      medicalDiagram.className = 'medical-diagram';
+      
+      // Create an image element for the medical diagram
+      const diagramImg = document.createElement('img');
+      diagramImg.src = '/lovable-uploads/c3c1277a-5c1f-4589-b12d-7e9aa62a214f.png';
+      diagramImg.alt = 'Medical Diagram';
+      diagramImg.className = 'w-full h-full object-contain';
+      
+      medicalDiagram.appendChild(diagramImg);
+      container.appendChild(medicalDiagram);
+      
+      // Create additional floating medical elements
+      const medicalElements = ['test-tube', 'microscope', 'stethoscope', 'dna'];
+      
+      for (let i = 0; i < 10; i++) {
         const element = document.createElement('div');
         element.className = 'floating-element';
         
         // Randomly choose element type
-        const elementType = Math.floor(Math.random() * 4);
-        if (elementType === 0) {
-          element.innerHTML = '❤️'; // Heart
-          element.classList.add('heart');
-        } else if (elementType === 1) {
-          element.innerHTML = '🧬'; // DNA
-          element.classList.add('dna');
-        } else if (elementType === 2) {
-          element.innerHTML = '💊'; // Pill
-          element.classList.add('pill');
-        } else {
-          element.innerHTML = '🩺'; // Stethoscope
+        const elementType = medicalElements[Math.floor(Math.random() * medicalElements.length)];
+        
+        // Add specific medical icon based on type
+        if (elementType === 'test-tube') {
+          element.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-test-tube"><path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5h0c-1.4 0-2.5-1.1-2.5-2.5V2"/><path d="M8.5 2h7"/><path d="M14.5 16h-5"/></svg>';
+          element.classList.add('test-tube');
+        } else if (elementType === 'microscope') {
+          element.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-microscope"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2Z"/><path d="M12 9a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-1a2 2 0 0 0-2 2v1"/></svg>';
+          element.classList.add('microscope');
+        } else if (elementType === 'stethoscope') {
+          element.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-stethoscope"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>';
           element.classList.add('stethoscope');
+        } else {
+          element.innerHTML = '🧬';
+          element.classList.add('dna');
         }
         
         // Set random position and animation duration
@@ -61,7 +79,7 @@ const Index = () => {
       
       <header className="w-full p-4 flex justify-between items-center relative z-10">
         <div className="flex items-center space-x-2">
-          <img src="/logo.svg" alt="MediSynth" className="h-8 w-8 logo-pulse" />
+          <Stethoscope className="h-8 w-8 text-primary animate-pulse" />
           <span className="text-xl font-bold">MediSynth</span>
         </div>
         <div className="flex items-center space-x-4">
@@ -102,18 +120,22 @@ const Index = () => {
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           <FeatureCard
+            icon={<Microscope className="h-10 w-10 text-primary mb-4" />}
             title="AI-Powered Analysis"
             description="Advanced machine learning algorithms analyze medical images with high accuracy"
           />
           <FeatureCard
+            icon={<FileText className="h-10 w-10 text-primary mb-4" />}
             title="Structured Reports"
             description="Automatically generate professional, structured medical reports"
           />
           <FeatureCard
+            icon={<Lock className="h-10 w-10 text-primary mb-4" />}
             title="Secure & Compliant"
             description="HIPAA-compliant platform ensures patient data is always protected"
           />
           <FeatureCard
+            icon={<Stopwatch className="h-10 w-10 text-primary mb-4" />}
             title="Time-Saving"
             description="Reduce report generation time by up to 80% compared to manual methods"
           />
@@ -127,10 +149,42 @@ const Index = () => {
   );
 };
 
-const FeatureCard = ({ title, description }: { title: string; description: string }) => (
+// Add these extra components
+const FileText = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <line x1="16" y1="13" x2="8" y2="13"/>
+    <line x1="16" y1="17" x2="8" y2="17"/>
+    <line x1="10" y1="9" x2="8" y2="9"/>
+  </svg>
+);
+
+const Lock = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+  </svg>
+);
+
+const Stopwatch = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="12" cy="13" r="8"/>
+    <path d="M12 9v4l2 2"/>
+    <path d="M5 3 2 6"/>
+    <path d="m22 6-3-3"/>
+    <path d="M6.38 18.7 4 21"/>
+    <path d="M17.64 18.67 20 21"/>
+  </svg>
+);
+
+const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string; description: string }) => (
   <div className="bg-white p-6 rounded-lg shadow-lg animate-scale-in">
-    <h3 className="text-xl font-semibold mb-3">{title}</h3>
-    <p className="text-gray-600">{description}</p>
+    <div className="flex flex-col items-center">
+      {icon}
+      <h3 className="text-xl font-semibold mb-3">{title}</h3>
+      <p className="text-gray-600">{description}</p>
+    </div>
   </div>
 );
 

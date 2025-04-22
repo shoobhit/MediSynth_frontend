@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
-import { Trash2, FilePlus, FileText, Share, Printer } from 'lucide-react';
+import { Trash2, FilePlus, FileText, Share, Printer, Stethoscope } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface Report {
@@ -25,27 +25,13 @@ const Reports = () => {
   // Toast notification
   const { toast } = useToast();
   
-  // Simulated reports data with useState to manage them
-  const [reports, setReports] = useState<Report[]>([
-    {
-      id: '1',
-      patientName: 'Sarah Johnson',
-      patientAge: 45,
-      patientGender: 'Female',
-      reportType: 'xray',
-      createdAt: '2025-04-21T14:30:00Z',
-      content: 'The lungs are clear with no evidence of active infiltrate. No pneumothorax or pleural effusion is identified. The cardiac silhouette is normal in size. The mediastinum is unremarkable. Osseous structures are intact.'
-    },
-    {
-      id: '2',
-      patientName: 'Michael Chen',
-      patientAge: 62,
-      patientGender: 'Male',
-      reportType: 'mri',
-      createdAt: '2025-04-20T10:15:00Z',
-      content: 'The brain demonstrates normal gray-white matter differentiation. No evidence of acute infarction, mass effect, or midline shift. The ventricles and sulci are normal in size and configuration. No abnormal enhancement is seen.'
-    }
-  ]);
+  // Load reports from localStorage
+  const [reports, setReports] = useState<Report[]>([]);
+
+  useEffect(() => {
+    const savedReports = JSON.parse(localStorage.getItem('patientReports') || '[]');
+    setReports(savedReports);
+  }, []);
 
   // New report form state
   const [newReport, setNewReport] = useState({
@@ -103,8 +89,10 @@ const Reports = () => {
       content: newReport.content
     };
 
-    // Add to reports array
-    setReports(prev => [report, ...prev]);
+    // Add to reports array and save to localStorage
+    const updatedReports = [report, ...reports];
+    setReports(updatedReports);
+    localStorage.setItem('patientReports', JSON.stringify(updatedReports));
 
     // Reset form and close dialog
     setNewReport({
@@ -124,7 +112,9 @@ const Reports = () => {
   };
 
   const handleDeleteReport = (id: string) => {
-    setReports(prev => prev.filter(report => report.id !== id));
+    const updatedReports = reports.filter(report => report.id !== id);
+    setReports(updatedReports);
+    localStorage.setItem('patientReports', JSON.stringify(updatedReports));
     
     toast({
       title: "Report deleted",
@@ -152,8 +142,10 @@ const Reports = () => {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <Link to="/" className="flex items-center">
-            <div className="heart-pulse">❤️</div>
-            <span className="text-xl font-bold ml-2">MediSynth</span>
+            <div className="mr-2">
+              <Stethoscope className="w-6 h-6 text-primary animate-pulse" />
+            </div>
+            <span className="text-xl font-bold">MediSynth</span>
           </Link>
           <nav className="flex items-center space-x-4">
             <Link to="/dashboard" className="font-medium text-gray-600 hover:text-primary">Dashboard</Link>

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { FileUploadDemo } from '@/components/FileUploadDemo';
 import { useToast } from '@/hooks/use-toast';
-import { Heart, Loader2 } from 'lucide-react';
+import { Heart, Loader2, Microscope, Stethoscope } from 'lucide-react';
 
 const Dashboard = () => {
   const [name, setName] = useState('');
@@ -18,14 +18,32 @@ const Dashboard = () => {
   const [reportType, setReportType] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // Simulate API call to generate a report
-      console.log('Generating report for:', { name, age, gender, address, reportType });
+      // Create the report object
+      const newReport = {
+        id: Date.now().toString(),
+        patientName: name,
+        patientAge: parseInt(age),
+        patientGender: gender,
+        reportType: reportType,
+        createdAt: new Date().toISOString(),
+        content: `Analysis of ${reportType.toUpperCase()} for ${name}, ${age} years old, ${gender}. The examination shows normal findings with no evidence of pathology. The structures appear intact and properly aligned.`
+      };
+      
+      // Get existing reports from localStorage or initialize empty array
+      const existingReports = JSON.parse(localStorage.getItem('patientReports') || '[]');
+      
+      // Add new report to the array
+      const updatedReports = [newReport, ...existingReports];
+      
+      // Save updated reports to localStorage
+      localStorage.setItem('patientReports', JSON.stringify(updatedReports));
       
       // Simulate an API delay
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -34,6 +52,9 @@ const Dashboard = () => {
         title: "Report generated successfully",
         description: "Your medical report has been created and saved.",
       });
+      
+      // Navigate to reports page
+      navigate('/reports');
       
     } catch (error) {
       toast({
@@ -51,8 +72,10 @@ const Dashboard = () => {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <Link to="/" className="flex items-center">
-            <div className="heart-pulse">❤️</div>
-            <span className="text-xl font-bold ml-2">MediSynth</span>
+            <div className="mr-2">
+              <Stethoscope className="w-6 h-6 text-primary animate-pulse" />
+            </div>
+            <span className="text-xl font-bold">MediSynth</span>
           </Link>
           <nav className="flex items-center space-x-4">
             <Link to="/dashboard" className="font-medium text-primary">Dashboard</Link>
@@ -109,9 +132,9 @@ const Dashboard = () => {
                           <SelectValue placeholder="Select gender" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="male">Male</SelectItem>
-                          <SelectItem value="female">Female</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
+                          <SelectItem value="Male">Male</SelectItem>
+                          <SelectItem value="Female">Female</SelectItem>
+                          <SelectItem value="Other">Other</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
