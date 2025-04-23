@@ -26,11 +26,11 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#8B5CF6",
+          DEFAULT: "#8B5CF6", // Vivid purple
           foreground: "#ffffff",
         },
         secondary: {
-          DEFAULT: "#7E69AB",
+          DEFAULT: "#7E69AB", // Muted purple
           foreground: "#ffffff",
         },
         destructive: {
@@ -38,11 +38,11 @@ export default {
           foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: "#F1F0FB",
+          DEFAULT: "#F1F0FB", // Very light purple
           foreground: "#1A1F2C",
         },
         accent: {
-          DEFAULT: "#E5DEFF",
+          DEFAULT: "#E5DEFF", // Light purple
           foreground: "#1A1F2C",
         },
         card: {
