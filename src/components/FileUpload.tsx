@@ -13,26 +13,28 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    // Generate preview URLs for the images
     const newPreviewUrls = acceptedFiles.map(file => URL.createObjectURL(file));
     setPreviewUrls(prev => [...prev, ...newPreviewUrls]);
     onChange(acceptedFiles);
   }, [onChange]);
 
   const removeFile = (index: number) => {
-    // Revoke object URL to prevent memory leaks
     URL.revokeObjectURL(previewUrls[index]);
-    
-    // Filter out the removed file preview
     const newPreviewUrls = previewUrls.filter((_, i) => i !== index);
     setPreviewUrls(newPreviewUrls);
     
-    // Recreate the files array from the file input
-    const newFiles = Array.from(document.querySelector('input[type=file]')?.files || [])
-      .filter((_, i) => i !== index);
-    
-    // Update parent component
-    onChange(newFiles);
+    const fileInput = document.querySelector('input[type=file]') as HTMLInputElement;
+    if (fileInput && fileInput.files) {
+      const dt = new DataTransfer();
+      const { files } = fileInput;
+      for (let i = 0; i < files.length; i++) {
+        if (i !== index) {
+          dt.items.add(files[i]);
+        }
+      }
+      const newFiles = Array.from(dt.files);
+      onChange(newFiles);
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

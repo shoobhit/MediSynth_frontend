@@ -1,8 +1,8 @@
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/moving-border';
 import { Stethoscope, TestTubes, Microscope } from 'lucide-react';
+import { FlipWords } from '@/components/ui/flip-words';
 
 const Index = () => {
   useEffect(() => {
@@ -73,21 +73,32 @@ const Index = () => {
     };
   }, []);
 
+  const flipWords = [
+    "AI-Powered",
+    "Accurate",
+    "Fast",
+    "Professional"
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-radial from-accent via-background to-background relative overflow-hidden">
       <div className="animated-background absolute inset-0 z-0 pointer-events-none" />
       
       <header className="w-full p-4 flex justify-between items-center relative z-10">
         <div className="flex items-center space-x-2">
-          <Stethoscope className="h-8 w-8 text-primary animate-pulse" />
+          <Microscope className="h-8 w-8 text-primary animate-pulse" />
           <span className="text-xl font-bold">MediSynth</span>
         </div>
         <div className="flex items-center space-x-4">
           <Link to="/login">
-            <Button variant="ghost" className="animate-fade-in transition-all duration-300 hover:bg-primary/20">Login</Button>
+            <Button borderRadius="0.5rem" className="bg-white/10 backdrop-blur-sm border-neutral-200/10">
+              Login
+            </Button>
           </Link>
           <Link to="/signup">
-            <Button className="animate-fade-in transition-all duration-300 hover:scale-105">Sign Up</Button>
+            <Button borderRadius="0.5rem" className="bg-primary/10 backdrop-blur-sm hover:bg-primary/20">
+              Sign Up
+            </Button>
           </Link>
         </div>
       </header>
@@ -96,18 +107,23 @@ const Index = () => {
         <h1 className="text-5xl font-bold mb-6 animate-scale-in">
           <span className="text-primary">Medi</span>Synth
         </h1>
-        <p className="text-xl text-muted-foreground mb-8 max-w-2xl animate-fade-in">
-          Modern AI-powered medical report generation
-          for healthcare professionals
-        </p>
+        <div className="text-xl mb-8 max-w-2xl animate-fade-in">
+          <FlipWords words={flipWords} className="font-semibold text-primary" />
+          <span className="text-muted-foreground">
+            medical report generation for healthcare professionals
+          </span>
+        </div>
         <div className="flex gap-4 animate-fade-in">
           <Link to="/signup">
-            <Button size="lg" className="form-button">
+            <Button borderRadius="0.75rem" className="bg-white/10 backdrop-blur-sm">
               Get Started
             </Button>
           </Link>
           <Link to="/login">
-            <Button size="lg" variant="outline" className="transition-all duration-300 hover:scale-105">
+            <Button 
+              borderRadius="0.75rem"
+              className="bg-primary/10 backdrop-blur-sm hover:bg-primary/20"
+            >
               Sign In
             </Button>
           </Link>
@@ -149,7 +165,6 @@ const Index = () => {
   );
 };
 
-// Add these extra components
 const FileText = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
