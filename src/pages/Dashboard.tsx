@@ -6,7 +6,6 @@
 // import { Input } from '@/components/ui/input';
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 // import { Textarea } from '@/components/ui/textarea';
-// import { FileUploadDemo } from '@/components/FileUploadDemo';
 // import { useToast } from '@/hooks/use-toast';
 // import { Heart, Loader2, Microscope, Stethoscope } from 'lucide-react';
 
@@ -16,9 +15,16 @@
 //   const [gender, setGender] = useState('');
 //   const [address, setAddress] = useState('');
 //   const [reportType, setReportType] = useState('');
+//   const [file, setFile] = useState<File | null>(null); // State for uploaded file
 //   const [isLoading, setIsLoading] = useState(false);
 //   const { toast } = useToast();
 //   const navigate = useNavigate();
+
+//   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     if (e.target.files && e.target.files[0]) {
+//       setFile(e.target.files[0]);
+//     }
+//   };
 
 //   const handleSubmit = async (e: React.FormEvent) => {
 //     e.preventDefault();
@@ -29,11 +35,14 @@
 //       const newReport = {
 //         id: Date.now().toString(),
 //         patientName: name,
-//         patientAge: parseInt(age),
+//         patientAge: parseInt(age) || 0,
 //         patientGender: gender,
 //         reportType: reportType,
 //         createdAt: new Date().toISOString(),
-//         content: `Analysis of ${reportType.toUpperCase()} for ${name}, ${age} years old, ${gender}. The examination shows normal findings with no evidence of pathology. The structures appear intact and properly aligned.`
+//         content: "Sample report content", // Replace with actual API response data
+//         cam_url: `http://localhost:5000/sample-cam-url`, // Replace with actual API response data
+//         predictions: "Sample predictions", // Replace with actual API response data
+//         top_class: "Sample top class", // Replace with actual API response data
 //       };
       
 //       // Get existing reports from localStorage or initialize empty array
@@ -55,7 +64,6 @@
       
 //       // Navigate to reports page
 //       navigate('/reports');
-      
 //     } catch (error) {
 //       toast({
 //         title: "Error generating report",
@@ -72,10 +80,8 @@
 //       <header className="bg-white shadow">
 //         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
 //           <Link to="/" className="flex items-center">
-//             <div className="mr-2">
-//               <Stethoscope className="w-6 h-6 text-primary animate-pulse" />
-//             </div>
-//             <span className="text-xl font-bold">MediSynth</span>
+//             <Microscope className="h-6 w-6 text-primary" />
+//             <span className="text-xl font-bold ml-2">MediSynth</span>
 //           </Link>
 //           <nav className="flex items-center space-x-4">
 //             <Link to="/dashboard" className="font-medium text-primary">Dashboard</Link>
@@ -169,7 +175,7 @@
                   
 //                   <div className="space-y-2">
 //                     <label className="text-sm font-medium">Upload Medical Image</label>
-//                     <FileUploadDemo />
+//                     <Input type="file" accept="image/*" onChange={handleFileChange} />
 //                   </div>
                   
 //                   <Button type="submit" className="w-full form-button" disabled={isLoading}>
@@ -210,6 +216,9 @@
 // };
 
 // export default Dashboard;
+
+
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -227,7 +236,7 @@ const Dashboard = () => {
   const [gender, setGender] = useState('');
   const [address, setAddress] = useState('');
   const [reportType, setReportType] = useState('');
-  const [file, setFile] = useState<File | null>(null); // State for uploaded file
+  const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -253,15 +262,13 @@ const Dashboard = () => {
     }
 
     try {
-      // Create form data for image upload
       const formData = new FormData();
       formData.append('file', file);
 
-      // Send image to Flask backend
       interface UploadResponse {
+        predictions: Record<string, number>;
         report: string;
         cam_url: string;
-        predictions: any; // Replace 'any' with a more specific type if known
         top_class: string;
       }
 
@@ -269,7 +276,12 @@ const Dashboard = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      // Create the report object with patient details and backend response
+      const data = response.data;
+
+      if (!data.predictions || Object.values(data.predictions).every(val => isNaN(val))) {
+        throw new Error('Invalid prediction data from server');
+      }
+
       const newReport = {
         id: Date.now().toString(),
         patientName: name,
@@ -277,19 +289,14 @@ const Dashboard = () => {
         patientGender: gender,
         reportType: reportType,
         createdAt: new Date().toISOString(),
-        content: response.data.report, // Use model-generated report
-        cam_url: `http://localhost:5000${response.data.cam_url}`, // CAM image URL
-        predictions: response.data.predictions, // Store predictions
-        top_class: response.data.top_class, // Top predicted class
+        content: response.data.report,
+        cam_url: `http://localhost:5000${response.data.cam_url}`,
+        predictions: response.data.predictions,
+        top_class: response.data.top_class,
       };
 
-      // Get existing reports from localStorage
       const existingReports = JSON.parse(localStorage.getItem('patientReports') || '[]');
-
-      // Add new report to the array
       const updatedReports = [newReport, ...existingReports];
-
-      // Save updated reports to localStorage
       localStorage.setItem('patientReports', JSON.stringify(updatedReports));
 
       toast({
@@ -297,12 +304,12 @@ const Dashboard = () => {
         description: "Your medical report has been created and saved.",
       });
 
-      // Navigate to reports page
       navigate('/reports');
     } catch (error) {
+      console.error('Error:', error);
       toast({
         title: "Error generating report",
-        description: "There was a problem creating your report. Please try again.",
+        description: error.message || "There was a problem creating your report. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -389,10 +396,7 @@ const Dashboard = () => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="xray">X-Ray</SelectItem>
-                          <SelectItem value="mri">MRI</SelectItem>
-                          <SelectItem value="ct">CT Scan</SelectItem>
-                          <SelectItem value="ultrasound">Ultrasound</SelectItem>
-                          <SelectItem value="ekg">EKG</SelectItem>
+                          <SelectItem value="xray">MRI</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

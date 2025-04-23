@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Heart } from 'lucide-react';
+import { Microscope } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -19,10 +18,8 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // In a real app, we would call the API endpoint here
       console.log('Login attempt with:', { email, password });
       
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast({
@@ -49,7 +46,7 @@ const Login = () => {
           <CardHeader className="space-y-1">
             <div className="flex justify-center mb-4">
               <Link to="/" className="flex items-center gap-2 group">
-                <Heart className="h-8 w-8 text-primary logo-pulse" />
+                <Microscope className="h-8 w-8 text-primary" />
                 <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                   MediSynth
                 </span>
