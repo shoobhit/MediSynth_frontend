@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/moving-border';
-import { Stethoscope, TestTubes, Microscope } from 'lucide-react';
-import { FlipWords } from '@/components/ui/flip-words';
+import { Microscope, FileText, Lock, Stopwatch } from 'lucide-react';
 
 const Index = () => {
   useEffect(() => {
@@ -73,20 +72,11 @@ const Index = () => {
     };
   }, []);
 
-  const flipWords = [
-    "AI-Powered",
-    "Accurate",
-    "Fast",
-    "Professional"
-  ];
-
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-radial from-accent via-background to-background relative overflow-hidden">
-      <div className="animated-background absolute inset-0 z-0 pointer-events-none" />
-      
+    <div className="min-h-screen flex flex-col bg-white relative overflow-hidden">
       <header className="w-full p-4 flex justify-between items-center relative z-10">
         <div className="flex items-center space-x-2">
-          <Microscope className="h-8 w-8 text-primary animate-pulse" />
+          <Microscope className="h-8 w-8 text-primary" />
           <span className="text-xl font-bold">MediSynth</span>
         </div>
         <div className="flex items-center space-x-4">
@@ -104,16 +94,16 @@ const Index = () => {
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center text-center px-4 relative z-10">
-        <h1 className="text-5xl font-bold mb-6 animate-scale-in">
+        <h1 className="text-5xl font-bold mb-6">
           <span className="text-primary">Medi</span>Synth
         </h1>
-        <div className="text-xl mb-8 max-w-2xl animate-fade-in">
-          <FlipWords words={flipWords} className="font-semibold text-primary" />
-          <span className="text-muted-foreground">
-            medical report generation for healthcare professionals
+        <div className="text-xl mb-8 max-w-2xl">
+          <span className="font-semibold text-primary">Professional</span>
+          <span className="text-secondary">
+            {" "}medical report generation for healthcare professionals
           </span>
         </div>
-        <div className="flex gap-4 animate-fade-in">
+        <div className="flex gap-4">
           <Link to="/signup">
             <Button borderRadius="0.75rem" className="bg-white/10 backdrop-blur-sm">
               Get Started
@@ -131,7 +121,7 @@ const Index = () => {
       </main>
 
       <section className="py-16 px-4 relative z-10">
-        <h2 className="text-3xl font-bold text-center mb-12 animate-fade-in">
+        <h2 className="text-3xl font-bold text-center mb-12">
           Powerful Medical Report Features
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
@@ -165,36 +155,8 @@ const Index = () => {
   );
 };
 
-const FileText = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-    <polyline points="14 2 14 8 20 8"/>
-    <line x1="16" y1="13" x2="8" y2="13"/>
-    <line x1="16" y1="17" x2="8" y2="17"/>
-    <line x1="10" y1="9" x2="8" y2="9"/>
-  </svg>
-);
-
-const Lock = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-  </svg>
-);
-
-const Stopwatch = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <circle cx="12" cy="13" r="8"/>
-    <path d="M12 9v4l2 2"/>
-    <path d="M5 3 2 6"/>
-    <path d="m22 6-3-3"/>
-    <path d="M6.38 18.7 4 21"/>
-    <path d="M17.64 18.67 20 21"/>
-  </svg>
-);
-
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string; description: string }) => (
-  <div className="bg-white p-6 rounded-lg shadow-lg animate-scale-in">
+  <div className="bg-white p-6 rounded-lg shadow-lg">
     <div className="flex flex-col items-center">
       {icon}
       <h3 className="text-xl font-semibold mb-3">{title}</h3>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -8,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { FileUploadDemo } from '@/components/FileUploadDemo';
 import { useToast } from '@/hooks/use-toast';
-import { Heart, Loader2, Microscope, Stethoscope } from 'lucide-react';
+import { Microscope, Loader2 } from 'lucide-react';
 
 const Dashboard = () => {
   const [name, setName] = useState('');
@@ -25,7 +24,6 @@ const Dashboard = () => {
     setIsLoading(true);
 
     try {
-      // Create the report object
       const newReport = {
         id: Date.now().toString(),
         patientName: name,
@@ -36,16 +34,12 @@ const Dashboard = () => {
         content: `Analysis of ${reportType.toUpperCase()} for ${name}, ${age} years old, ${gender}. The examination shows normal findings with no evidence of pathology. The structures appear intact and properly aligned.`
       };
       
-      // Get existing reports from localStorage or initialize empty array
       const existingReports = JSON.parse(localStorage.getItem('patientReports') || '[]');
       
-      // Add new report to the array
       const updatedReports = [newReport, ...existingReports];
       
-      // Save updated reports to localStorage
       localStorage.setItem('patientReports', JSON.stringify(updatedReports));
       
-      // Simulate an API delay
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       toast({
@@ -53,7 +47,6 @@ const Dashboard = () => {
         description: "Your medical report has been created and saved.",
       });
       
-      // Navigate to reports page
       navigate('/reports');
       
     } catch (error) {
@@ -72,10 +65,8 @@ const Dashboard = () => {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <Link to="/" className="flex items-center">
-            <div className="mr-2">
-              <Stethoscope className="w-6 h-6 text-primary animate-pulse" />
-            </div>
-            <span className="text-xl font-bold">MediSynth</span>
+            <Microscope className="h-6 w-6 text-primary" />
+            <span className="text-xl font-bold ml-2">MediSynth</span>
           </Link>
           <nav className="flex items-center space-x-4">
             <Link to="/dashboard" className="font-medium text-primary">Dashboard</Link>
