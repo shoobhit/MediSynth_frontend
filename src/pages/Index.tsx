@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Microscope, FileText, Lock, Clock } from 'lucide-react';
+import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 
 const Index = () => {
   useEffect(() => {
@@ -78,16 +79,17 @@ const Index = () => {
       <header className="w-full p-4 flex justify-between items-center relative z-10">
         <div className="flex items-center space-x-2">
           <Microscope className="h-8 w-8 text-primary animate-pulse" />
-          <span className="text-xl font-bold">MediSynth</span>
+          <span className="text-2xl font-bold">MediSynth</span>
         </div>
         <div className="flex items-center space-x-4">
           <Link to="/login">
-            <Button variant="outline" className="bg-white text-primary border-primary hover:bg-primary hover:text-white">
+            <Button variant="outline" 
+                    className="bg-white text-primary border-2 border-primary hover:bg-primary hover:text-white transition-all duration-300 shadow-lg hover:shadow-primary/20">
               Login
             </Button>
           </Link>
           <Link to="/signup">
-            <Button className="bg-primary text-white hover:bg-primary/90">
+            <Button className="bg-primary text-white hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-primary/40">
               Sign Up
             </Button>
           </Link>
@@ -95,23 +97,22 @@ const Index = () => {
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center text-center px-4 relative z-10">
-        <h1 className="text-5xl font-bold mb-6">
+        <h1 className="text-[3.25rem] font-bold mb-6">
           <span className="text-primary">Medi</span>Synth
         </h1>
         <div className="text-xl mb-8 max-w-2xl">
-          <span className="font-semibold text-primary">Professional</span>
-          <span className="text-secondary">
-            {" "}medical report generation for healthcare professionals
-          </span>
+          <span className="font-semibold text-primary">Professional</span>{" "}
+          <TypewriterEffect />
         </div>
         <div className="flex gap-4">
           <Link to="/signup">
-            <Button className="bg-primary text-white hover:bg-primary/90">
+            <Button className="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/40 hover:scale-105">
               Get Started
             </Button>
           </Link>
           <Link to="/login">
-            <Button variant="outline" className="bg-white text-primary border-primary hover:bg-primary hover:text-white">
+            <Button variant="outline" 
+                    className="bg-white text-primary border-2 border-primary hover:bg-primary hover:text-white px-8 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/20 hover:scale-105">
               Sign In
             </Button>
           </Link>
@@ -154,13 +155,12 @@ const Index = () => {
 };
 
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string; description: string }) => (
-  <div className="bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-2xl group hover:scale-105">
+  <div className="bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105">
     <div className="flex flex-col items-center relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 opacity-0 group-hover:opacity-50 transition-opacity" />
       <div className="relative z-10 flex flex-col items-center">
         {icon}
-        <h3 className="text-xl font-semibold mb-3 group-hover:text-white transition-colors">{title}</h3>
-        <p className="text-gray-600 group-hover:text-white/90 transition-colors text-center">{description}</p>
+        <h3 className="text-xl font-semibold mb-3 text-gray-800 transition-colors">{title}</h3>
+        <p className="text-gray-600 transition-colors text-center">{description}</p>
       </div>
     </div>
   </div>
