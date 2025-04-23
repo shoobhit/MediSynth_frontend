@@ -1,7 +1,8 @@
+
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/moving-border';
-import { Microscope, FileText, Lock, Stopwatch } from 'lucide-react';
+import { Microscope, FileText, Lock, Clock } from 'lucide-react';
 
 const Index = () => {
   useEffect(() => {
@@ -141,7 +142,7 @@ const Index = () => {
             description="HIPAA-compliant platform ensures patient data is always protected"
           />
           <FeatureCard
-            icon={<Stopwatch className="h-10 w-10 text-primary mb-4" />}
+            icon={<Clock className="h-10 w-10 text-primary mb-4" />}
             title="Time-Saving"
             description="Reduce report generation time by up to 80% compared to manual methods"
           />
