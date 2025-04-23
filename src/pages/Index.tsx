@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/moving-border';
+import { Button } from '@/components/ui/button';
 import { Microscope, FileText, Lock, Clock } from 'lucide-react';
 
 const Index = () => {
@@ -77,17 +77,17 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-white relative overflow-hidden">
       <header className="w-full p-4 flex justify-between items-center relative z-10">
         <div className="flex items-center space-x-2">
-          <Microscope className="h-8 w-8 text-primary" />
+          <Microscope className="h-8 w-8 text-primary animate-pulse" />
           <span className="text-xl font-bold">MediSynth</span>
         </div>
         <div className="flex items-center space-x-4">
           <Link to="/login">
-            <Button borderRadius="0.5rem" className="bg-white/10 backdrop-blur-sm border-neutral-200/10">
+            <Button variant="outline" className="bg-white text-primary border-primary hover:bg-primary hover:text-white">
               Login
             </Button>
           </Link>
           <Link to="/signup">
-            <Button borderRadius="0.5rem" className="bg-primary/10 backdrop-blur-sm hover:bg-primary/20">
+            <Button className="bg-primary text-white hover:bg-primary/90">
               Sign Up
             </Button>
           </Link>
@@ -106,15 +106,12 @@ const Index = () => {
         </div>
         <div className="flex gap-4">
           <Link to="/signup">
-            <Button borderRadius="0.75rem" className="bg-white/10 backdrop-blur-sm">
+            <Button className="bg-primary text-white hover:bg-primary/90">
               Get Started
             </Button>
           </Link>
           <Link to="/login">
-            <Button 
-              borderRadius="0.75rem"
-              className="bg-primary/10 backdrop-blur-sm hover:bg-primary/20"
-            >
+            <Button variant="outline" className="bg-white text-primary border-primary hover:bg-primary hover:text-white">
               Sign In
             </Button>
           </Link>
@@ -157,11 +154,14 @@ const Index = () => {
 };
 
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string; description: string }) => (
-  <div className="bg-white p-6 rounded-lg shadow-lg">
-    <div className="flex flex-col items-center">
-      {icon}
-      <h3 className="text-xl font-semibold mb-3">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+  <div className="bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-2xl group hover:scale-105">
+    <div className="flex flex-col items-center relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 opacity-0 group-hover:opacity-50 transition-opacity" />
+      <div className="relative z-10 flex flex-col items-center">
+        {icon}
+        <h3 className="text-xl font-semibold mb-3 group-hover:text-white transition-colors">{title}</h3>
+        <p className="text-gray-600 group-hover:text-white/90 transition-colors text-center">{description}</p>
+      </div>
     </div>
   </div>
 );
