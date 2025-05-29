@@ -1,22 +1,40 @@
-<<<<<<< HEAD
+# MediSynth Frontend
 
-## Project info
+**MediSynth** is a medical report generation platform that leverages AI to interpret chest X-rays and produce diagnostic reports. This repository contains the **frontend code** for the MediSynth application, built using **React**, **Vite**, and **ShadCN UI** for a modern, responsive, and clean user experience.
 
-**URL**: 
+---
 
+## 🚀 Features
 
-## What technologies are used for this project?
+- 📤 Upload chest X-ray images
+- 🧠 AI-based disease detection & report generation
+- 📄 Patient details input form
+- 🗂️ View previously generated reports
+- 🔒 Authentication: login, signup, logout
+- 🎨 Aesthetic and responsive UI using ShadCN UI components
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🛠️ Tech Stack
 
+- **Framework**: [React](https://react.dev/), [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Kit**: [ShadCN UI](https://ui.shadcn.com/)
+- **Routing**: React Router
+- **API Communication**: Axios
+- **Deployment**: Vercel
 
+---
 
-=======
-# MediSynth_frontend
->>>>>>> 5b241980d626b38278f97e262d932c715de044c8
+## 📦 Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/shoobhit/MediSynth-Frontend.git
+cd MediSynth-Frontend
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
