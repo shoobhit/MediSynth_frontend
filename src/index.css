@@ -91,6 +91,10 @@
     opacity: 0.2;
   }
 
+  .medical-report p {
+    margin: 0.75em 0;
+  }
+
   .medical-diagram {
     position: absolute;
     top: 50%;

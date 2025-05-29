@@ -84,12 +84,12 @@ const Index = () => {
         <div className="flex items-center space-x-4">
           <Link to="/login">
             <Button variant="outline" 
-                    className="bg-white text-primary border-2 border-primary hover:bg-primary hover:text-white transition-all duration-300 shadow-lg hover:shadow-primary/20">
+                    className="bg-white text-primary border-2 border-primary hover:bg-primary hover:text-white transition-ease-in duration-310 shadow-lg hover:shadow-primary/20">
               Login
             </Button>
           </Link>
           <Link to="/signup">
-            <Button className="bg-primary text-white hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-primary/40">
+            <Button className="bg-primary text-white hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-primary/50">
               Sign Up
             </Button>
           </Link>
@@ -104,15 +104,15 @@ const Index = () => {
           <span className="font-semibold text-primary">Professional</span>{" "}
           <TypewriterEffect />
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-5">
           <Link to="/signup">
-            <Button className="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/40 hover:scale-105">
+            <Button className="bg-primary text-white hover:bg-primary/90 px-6 py-6 text-lg  transition-all duration-300 shadow-lg hover:shadow-primary/50 hover:scale-105">
               Get Started
             </Button>
           </Link>
           <Link to="/login">
             <Button variant="outline" 
-                    className="bg-white text-primary border-2 border-primary hover:bg-primary hover:text-white px-8 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/20 hover:scale-105">
+                    className="bg-white text-primary border-2 border-primary hover:bg-primary hover:text-black   px-6 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/20 hover:scale-105">
               Sign In
             </Button>
           </Link>
