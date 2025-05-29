@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 ## Project info
 
@@ -16,3 +17,6 @@ This project is built with:
 
 
 
+=======
+# MediSynth_frontend
+>>>>>>> 5b241980d626b38278f97e262d932c715de044c8
